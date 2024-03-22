@@ -24,4 +24,10 @@ public class ProductsController {
     public boolean addProduct(@RequestHeader("name") String title,@RequestHeader String brand,@RequestHeader int price){
         return productService.addProduct(title,brand,price);
     }
+
+    @GetMapping("/{id}")
+    public ProductDto getProductById(@PathVariable String id){
+        Product product = productService.getProductById(id);
+        return new ProductDto(product);
+    }
 }

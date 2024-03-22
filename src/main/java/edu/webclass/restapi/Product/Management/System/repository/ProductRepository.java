@@ -1,6 +1,7 @@
 package edu.webclass.restapi.Product.Management.System.repository;
 
 import edu.webclass.restapi.Product.Management.System.models.Product;
+import edu.webclass.restapi.Product.Management.System.Exceptions.ProductNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +29,14 @@ public class ProductRepository {
 
     public List<Product> findAllProducts(){
         return products;
+    }
+
+    public Product getProductById(String id) {
+        for (Product product : ProductRepository.products) {
+            if (product.getId().equals(id)) {
+                return product;
+            }
+        }
+        throw new ProductNotFoundException("Product with id " + id + " not found", 404);
     }
 }
