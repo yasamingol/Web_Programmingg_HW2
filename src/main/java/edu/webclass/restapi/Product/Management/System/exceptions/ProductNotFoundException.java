@@ -1,7 +1,7 @@
-package edu.webclass.restapi.Product.Management.System.Exceptions;
+package edu.webclass.restapi.Product.Management.System.exceptions;
 
 public class ProductNotFoundException extends RuntimeException {
-    private int statusCode;
+    private final int statusCode;
 
     public ProductNotFoundException(String message, int statusCode) {
         super(message);

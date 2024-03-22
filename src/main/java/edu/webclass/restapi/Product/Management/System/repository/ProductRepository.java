@@ -1,8 +1,7 @@
 package edu.webclass.restapi.Product.Management.System.repository;
 
 import edu.webclass.restapi.Product.Management.System.models.Product;
-import edu.webclass.restapi.Product.Management.System.Exceptions.ProductNotFoundException;
-import org.springframework.stereotype.Repository;
+import edu.webclass.restapi.Product.Management.System.exceptions.ProductNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
