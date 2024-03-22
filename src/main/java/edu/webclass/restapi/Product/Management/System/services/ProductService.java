@@ -21,6 +21,10 @@ public class ProductService {
         return productRepository.createNewProduct(new Product(title,brand,price));
     }
 
+    public Product getProductById(String id){
+        return productRepository.getProductById(id);
+    }
+
 
 
 
