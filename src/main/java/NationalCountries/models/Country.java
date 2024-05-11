@@ -1,13 +1,17 @@
-// NationalCountries/models/ExternalCountry.java
 package NationalCountries.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ExternalCountry {
+public class Country {
     @JsonProperty("country")
     private String name;
 
-    // Getter and Setter
+    public Country() {}
+
+    public Country(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

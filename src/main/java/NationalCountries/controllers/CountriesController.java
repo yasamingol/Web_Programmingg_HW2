@@ -1,7 +1,6 @@
-// NationalCountries/controllers/CountriesController.java
 package NationalCountries.controllers;
 
-import NationalCountries.models.CountryDTO;
+import NationalCountries.models.Country;
 import NationalCountries.services.CountriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ public class CountriesController {
 
     @GetMapping("")
     public Map<String, Object> listAllCountries() {
-        List<CountryDTO> countries = countriesService.findAllCountries();
+        List<Country> countries = countriesService.findAllCountries();
         Map<String, Object> response = new HashMap<>();
         response.put("countries", countries);
         response.put("count", countries.size());
