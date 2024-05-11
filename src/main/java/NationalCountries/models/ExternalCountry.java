@@ -1,12 +1,11 @@
-// NationalCountries/models/CountryDTO.java
+// NationalCountries/models/ExternalCountry.java
 package NationalCountries.models;
 
-public class CountryDTO {
-    private String name;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public CountryDTO(String name) {
-        this.name = name;
-    }
+public class ExternalCountry {
+    @JsonProperty("country")
+    private String name;
 
     // Getter and Setter
     public String getName() {
