@@ -3,6 +3,7 @@ package NationalCountries.services;
 import NationalCountries.models.Country;
 import NationalCountries.models.CountryDetailDTO;
 import NationalCountries.models.ExternalCountries;
+import NationalCountries.models.WeatherInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,9 @@ public class CountriesService {
 
     public CountryDetailDTO findCountryByName(String name) {
         return externalCountriesService.fetchCountryByName(name);
+    }
+
+    public WeatherInfoDTO findCountriesCapitalCityWeather(String name) {
+        return externalCountriesService.fetchWeatherForCapital(name);
     }
 }

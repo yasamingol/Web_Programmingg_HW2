@@ -2,6 +2,7 @@ package NationalCountries.controllers;
 
 import NationalCountries.models.Country;
 import NationalCountries.models.CountryDetailDTO;
+import NationalCountries.models.WeatherInfoDTO;
 import NationalCountries.services.CountriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,16 @@ public class CountriesController {
             return ResponseEntity.ok(countryDetail);
         } else {
             System.out.println("Country not found for name: " + name);
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{name}/weather")
+    public ResponseEntity<WeatherInfoDTO> getWeatherByCountryCapital(@PathVariable String name) {
+        WeatherInfoDTO weather = countriesService.findCountriesCapitalCityWeather(name);
+        if (weather != null) {
+            return ResponseEntity.ok(weather);
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
