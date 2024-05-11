@@ -1,13 +1,13 @@
-package edu.webclass.restapi.Product.Management.System.models.dto;
+package NationalCountries.models.dto;
 
-import edu.webclass.restapi.Product.Management.System.models.Product;
+import NationalCountries.models.CountryDTO;
 
 public class ProductDto {
     public String title;
     public String brand;
     public int price;
 
-    public ProductDto(Product product) {
+    public ProductDto(CountryDTO product) {
         this.title = product.getTitle();
         this.brand = product.getBrand();
         this.price = product.getPrice();

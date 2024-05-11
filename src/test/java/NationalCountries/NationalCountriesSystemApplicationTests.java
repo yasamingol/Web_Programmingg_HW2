@@ -1,10 +1,10 @@
-package edu.webclass.restapi.Product.Management.System;
+package NationalCountries;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProductManagementSystemApplicationTests {
+class NationalCountriesSystemApplicationTests {
 
 	@Test
 	void contextLoads() {

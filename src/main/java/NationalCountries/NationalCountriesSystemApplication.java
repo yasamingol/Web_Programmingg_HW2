@@ -1,14 +1,14 @@
-package edu.webclass.restapi.Product.Management.System;
+package NationalCountries;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProductManagementSystemApplication {
+public class NationalCountriesSystemApplication {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(ProductManagementSystemApplication.class, args);
+		SpringApplication.run(NationalCountriesSystemApplication.class, args);
 	}
 
 }

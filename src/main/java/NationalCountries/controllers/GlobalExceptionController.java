@@ -1,6 +1,6 @@
-package edu.webclass.restapi.Product.Management.System.controllers;
+package NationalCountries.controllers;
 
-import edu.webclass.restapi.Product.Management.System.exceptions.ProductNotFoundException;
+import NationalCountries.exceptions.CountryNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionController {
 
-    @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<String> handleProductNotFoundException(ProductNotFoundException ex) {
+    @ExceptionHandler(CountryNotFoundException.class)
+    public ResponseEntity<String> handleProductNotFoundException(CountryNotFoundException ex) {
         String errorMessage = "Error Code: " + ex.getStatusCode() + ", Message: " + ex.getMessage();
         return ResponseEntity.status(ex.getStatusCode()).body(errorMessage);
     }
