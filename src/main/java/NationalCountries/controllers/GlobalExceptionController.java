@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionController {
 
     @ExceptionHandler(CountryNotFoundException.class)
-    public ResponseEntity<String> handleProductNotFoundException(CountryNotFoundException ex) {
+    public ResponseEntity<String> handleCountryNotFoundException(CountryNotFoundException ex) {
         String errorMessage = "Error Code: " + ex.getStatusCode() + ", Message: " + ex.getMessage();
         return ResponseEntity.status(ex.getStatusCode()).body(errorMessage);
     }
