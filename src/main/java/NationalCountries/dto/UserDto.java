@@ -1,4 +1,4 @@
-package NationalCountries.models;
+package NationalCountries.dto;
 
 import lombok.Getter;
 import lombok.Setter;

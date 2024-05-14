@@ -1,8 +1,8 @@
 package NationalCountries.controllers;
 
 import NationalCountries.models.Country;
-import NationalCountries.models.CountryDetailDTO;
-import NationalCountries.models.WeatherInfoDTO;
+import NationalCountries.dto.CountryDetailDTO;
+import NationalCountries.dto.WeatherInfoDTO;
 import NationalCountries.services.CountriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

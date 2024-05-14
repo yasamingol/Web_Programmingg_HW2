@@ -1,9 +1,9 @@
 package NationalCountries.services;
 
 import NationalCountries.models.Country;
-import NationalCountries.models.CountryDetailDTO;
+import NationalCountries.dto.CountryDetailDTO;
 import NationalCountries.models.ExternalCountries;
-import NationalCountries.models.WeatherInfoDTO;
+import NationalCountries.dto.WeatherInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

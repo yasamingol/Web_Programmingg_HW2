@@ -1,5 +1,8 @@
 package NationalCountries.exceptions;
 
+import lombok.Getter;
+
+@Getter
 public class CountryNotFoundException extends RuntimeException {
     private final int statusCode;
 
@@ -8,7 +11,4 @@ public class CountryNotFoundException extends RuntimeException {
         this.statusCode = statusCode;
     }
 
-    public int getStatusCode() {
-        return statusCode;
-    }
 }

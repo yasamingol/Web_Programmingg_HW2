@@ -1,8 +1,8 @@
 package NationalCountries.services;
 
-import NationalCountries.models.CountryDetailDTO;
+import NationalCountries.dto.CountryDetailDTO;
 import NationalCountries.models.ExternalCountries;
-import NationalCountries.models.WeatherInfoDTO;
+import NationalCountries.dto.WeatherInfoDTO;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
