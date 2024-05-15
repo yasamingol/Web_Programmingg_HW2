@@ -1,16 +1,12 @@
 package NationalCountries.entity;
 
-import NationalCountries.entity.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -29,8 +25,6 @@ public class User{
     private String password;
     @Column(nullable=false)
     private boolean isEnabled;
-    @Column(nullable = false)
-    private UserRole role;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",

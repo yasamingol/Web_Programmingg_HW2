@@ -1,22 +1,15 @@
 package NationalCountries.config;
 
-import NationalCountries.repository.UserRepository;
 import NationalCountries.services.Security.JwtAuthenticationEntryPoint;
 import NationalCountries.services.Security.JwtAuthenticationFilterMiddleware;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -49,13 +42,13 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-//                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Adjusted CORS setup
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((authorize) -> {
                     authorize
                             .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                             .requestMatchers("/users/login").permitAll()
-                            .requestMatchers("/users/register").permitAll() // Use requestMatchers for specific paths
-                            .anyRequest().authenticated(); // Require authentication for all other requests
+                            .requestMatchers("/users/register").permitAll()
+                            .anyRequest().authenticated();
                 })
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(authenticationEntryPoint)
@@ -63,7 +56,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(jwtAuthenticationFilterMiddleware, UsernamePasswordAuthenticationFilter.class); // Apply JWT filter
+                .addFilterBefore(jwtAuthenticationFilterMiddleware, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
