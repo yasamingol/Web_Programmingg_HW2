@@ -24,7 +24,6 @@ public class JwtTokenProviderService {
     @Value("${app.jwt-expiration-duration-milliseconds}")
     private long jwtExpirationDuration;
 
-
     private Key key(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }

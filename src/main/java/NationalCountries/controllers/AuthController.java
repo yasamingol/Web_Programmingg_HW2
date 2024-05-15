@@ -22,14 +22,19 @@ public class AuthController {
 
     @PostMapping(value = {"/login"})
     public ResponseEntity<JwtAuthDto> login(@RequestBody UserDto userDto) {
-        String token = authService.login(userDto);
+        String token = "";
+        try {
+            token = authService.login(userDto);
+        } catch (Exception e) {
+            System.out.println("Error while processing login: " + e.getMessage());
+        } // TODO: Cleaner Exception Handling!
         JwtAuthDto jwtAuthDto = new JwtAuthDto(token);
-        return ResponseEntity.ok(jwtAuthDto);
+        return ResponseEntity.ok(jwtAuthDto); // TODO: Should it return anything?
     }
 
     @PostMapping(value = {"/register"})
-    public ResponseEntity<String> register(@RequestBody UserDto registerDto){
-        String response = authService.registerUser(registerDto);
+    public ResponseEntity<String> register(@RequestBody UserDto userDto){
+        String response = authService.registerUser(userDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

@@ -47,17 +47,24 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests((authorize) ->
-                        authorize.anyRequest().permitAll()
-                ).exceptionHandling( exception -> exception
+        http
+                .csrf(csrf -> csrf.disable())
+//                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Adjusted CORS setup
+                .authorizeHttpRequests((authorize) -> {
+                    authorize
+                            .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                            .requestMatchers("/users/login").permitAll()
+                            .requestMatchers("/users/register").permitAll() // Use requestMatchers for specific paths
+                            .anyRequest().authenticated(); // Require authentication for all other requests
+                })
+                .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(authenticationEntryPoint)
-                ).sessionManagement( session -> session
+                )
+                .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                )
+                .addFilterBefore(jwtAuthenticationFilterMiddleware, UsernamePasswordAuthenticationFilter.class); // Apply JWT filter
 
-        http.addFilterBefore(jwtAuthenticationFilterMiddleware, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
