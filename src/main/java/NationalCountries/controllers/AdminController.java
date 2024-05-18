@@ -13,9 +13,9 @@ public class AdminController {
 
     private AdminService adminService;
 
-    @PutMapping(value = {"/users/{username}/{active}"})
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<String> updateUserActivation(@PathVariable String username, @PathVariable boolean active) {
+    @PutMapping(value = "/users/")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<String> updateUserActivation(@RequestParam String username, @RequestParam boolean active) {
         System.out.println("Came Here! - Username: " + username + " Active: " + active);
 
         boolean isUpdated = adminService.updateUserActivation(username, active);
