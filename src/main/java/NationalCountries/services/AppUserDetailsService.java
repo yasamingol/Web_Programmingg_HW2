@@ -1,5 +1,6 @@
 package NationalCountries.services;
 
+import NationalCountries.dto.UserDto;
 import NationalCountries.entity.User;
 import NationalCountries.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -37,5 +39,11 @@ public class AppUserDetailsService implements UserDetailsService {
                 true,
                 true,
                 authorities);
+    }
+
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserDto(user.getUsername(), user.getPassword()))
+                .collect(Collectors.toList());
     }
 }
