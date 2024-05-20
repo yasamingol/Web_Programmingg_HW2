@@ -33,6 +33,9 @@ public class User{
     )
     private Set<Role> roles;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ApiToken> tokens = new HashSet<>();
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
