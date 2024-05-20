@@ -3,11 +3,13 @@ package NationalCountries.services;
 import NationalCountries.entity.Role;
 import NationalCountries.entity.User;
 import NationalCountries.dto.UserDto;
+import NationalCountries.exceptions.RegistrationException;
 import NationalCountries.repository.RoleRepository;
 import NationalCountries.repository.UserRepository;
 import NationalCountries.services.Security.JwtTokenProviderService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,9 +29,9 @@ public class AuthService {
     private RoleRepository roleRepository;
     private JwtTokenProviderService jwtTokenProviderService;
 
-    public String registerUser(UserDto userDto) {
+    public ResponseEntity<String> registerUser(UserDto userDto) {
         if (userRepository.existsByUsername(userDto.getUsername())) {
-            return "Fail"; //TODO Complete Exception Handling
+            throw new RegistrationException("Error while processing registration: Username is already taken.");
         }
 
         User user = new User(userDto.getUsername(),
@@ -37,7 +39,7 @@ public class AuthService {
 
         userRepository.save(user);
 
-        return "Success"; //TODO Complete Exception Handling
+        return ResponseEntity.ok("Success");
     }
 
     @Transactional
