@@ -22,8 +22,9 @@ public class AdminController {
 
     @GetMapping(value = "/users")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Map<String, Object>> listAllUsers() {
-        List<UserDto> users = userDetailsService.getAllUsers();
+    public ResponseEntity<Map<String, Object>> listAllUsers(@RequestParam(defaultValue = "1") int pageNumber,
+                                                            @RequestParam(defaultValue = "100") int pageSize) {
+        List<List<Object>> users = userDetailsService.getAllUsers(pageNumber, pageSize);
         Map<String, Object> response = new HashMap<>();
         response.put("users", users);
         return ResponseEntity.ok(response);

@@ -1,6 +1,5 @@
 package NationalCountries.controllers;
 
-import NationalCountries.models.Country;
 import NationalCountries.dto.CountryDetailDTO;
 import NationalCountries.dto.WeatherInfoDTO;
 import NationalCountries.services.CountriesService;
@@ -20,10 +19,13 @@ public class CountriesController {
     private CountriesService countriesService;
 
     @GetMapping("")
-    public Map<String, Object> listAllCountries() {
-        List<Country> countries = countriesService.findAllCountries();
+    public Map<String, Object> listAllCountries(@RequestParam(defaultValue = "1") int pageNumber,
+                                                @RequestParam(defaultValue = "100") int pageSize) {
+        List<List<Object>> countries = countriesService.findAllCountries(pageNumber, pageSize);
         Map<String, Object> response = new HashMap<>();
         response.put("countries", countries);
+        response.put("page", pageNumber);
+        response.put("size", pageSize);
         response.put("count", countries.size());
         return response;
     }
