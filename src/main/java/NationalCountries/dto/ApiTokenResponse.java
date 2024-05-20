@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 public class ApiTokenResponse {
-    private String token;
     private String name;
     private Date expirationDate;
+    private String token;
 }

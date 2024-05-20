@@ -20,32 +20,24 @@ import java.util.stream.Collectors;
 public class ApiTokenController {
 
     private ApiTokenService apiTokenService;
-    private UserRepository userRepository;
 
     @PostMapping
     public ApiTokenResponse createToken(Authentication authentication, @RequestBody CreateApiTokenRequest request) {
-        User user = userRepository.findByUsername(authentication.getName())
-                .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found with username: "+ authentication.getName()));
-        System.out.println("Sag!");
-        ApiToken apiToken = apiTokenService.createToken(request.getName(), request.getExpirationDate(), user);
-        return new ApiTokenResponse(apiToken.getToken(), apiToken.getName(), apiToken.getExpirationDate());
+        ApiToken apiToken = apiTokenService.createToken(request.getName(), request.getExpirationDate(), authentication.getName());
+        return new ApiTokenResponse(apiToken.getName(), apiToken.getExpirationDate(), "API " + apiToken.getToken());
     }
 
     @GetMapping
     public List<ApiTokenResponse> getTokens(Authentication authentication) {
-        User user = userRepository.findByUsername(authentication.getName())
-                .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found with username: "+ authentication.getName()));
-        List<ApiToken> tokens = apiTokenService.findAllByUser(user);
+        List<ApiToken> tokens = apiTokenService.findAllByUser(authentication.getName());
         return tokens.stream()
-                .map(token -> new ApiTokenResponse(token.getToken(), token.getName(), token.getExpirationDate()))
+                .map(token -> new ApiTokenResponse(token.getName(), token.getExpirationDate(), "API " + token.getToken()))
                 .collect(Collectors.toList());
     }
 
     @DeleteMapping
     public void deleteToken(Authentication authentication, @RequestHeader("Authorization") String token) {
-        String tokenValue = token.substring(7); // Remove "Bearer " prefix
+        String tokenValue = token.substring(4);
         apiTokenService.deleteToken(tokenValue, authentication.getName());
     }
 }

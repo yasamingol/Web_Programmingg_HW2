@@ -50,10 +50,10 @@ public class JwtAuthenticationFilterMiddleware extends OncePerRequestFilter {
 
     private String getTokenFromRequest(HttpServletRequest request){
 
-        String bearerToken = request.getHeader("Authorization");
+        String apiToken = request.getHeader("Authorization");
 
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
-            return bearerToken.substring(7);
+        if (StringUtils.hasText(apiToken) && apiToken.startsWith("API ")) {
+            return apiToken.substring(4);
         }
 
         return null;
