@@ -3,6 +3,7 @@ package NationalCountries.services;
 import NationalCountries.dto.ApiTokenResponse;
 import NationalCountries.entity.ApiToken;
 import NationalCountries.entity.User;
+import NationalCountries.exceptions.TokenNotFoundException;
 import NationalCountries.repository.ApiTokenRepository;
 import NationalCountries.repository.UserRepository;
 import NationalCountries.services.Security.JwtTokenProviderService;
@@ -49,13 +50,16 @@ public class ApiTokenService {
         return response;
     }
 
-    public void deleteToken(String token, String username) {
+    public Map<String, Object> deleteToken(String token, String username) {
         Optional<ApiToken> apiToken = apiTokenRepository.findApiTokenByToken(token);
         if (apiToken.isPresent() && apiToken.get().getUser().getUsername().equals(username)) {
             apiTokenRepository.delete(apiToken.get());
             blacklistToken(token, apiToken.get().getExpirationDate());
+            Map<String, Object> response = new HashMap<>();
+            response.put("deleted", true);
+            return response;
         } else {
-            throw new RuntimeException("Token not found or unauthorized"); //TODO Exception handling
+            throw new TokenNotFoundException("Token not found.");
         }
     }
 

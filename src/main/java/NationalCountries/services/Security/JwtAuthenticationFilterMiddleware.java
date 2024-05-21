@@ -1,5 +1,6 @@
 package NationalCountries.services.Security;
 
+import NationalCountries.exceptions.JwtValidationException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,27 +29,32 @@ public class JwtAuthenticationFilterMiddleware extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-
         String token = getTokenFromRequest(request);
-        if(StringUtils.hasText(token) && jwtTokenProviderService.validateToken(token)){
-            String username = jwtTokenProviderService.getUsername(token);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (StringUtils.hasText(token)) {
+            try {
+                if (jwtTokenProviderService.validateToken(token)) {
+                    String username = jwtTokenProviderService.getUsername(token);
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.getAuthorities()
-            );
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
 
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
+                }
+            } catch (JwtValidationException jwtValidationException) {
+                response.sendError(401, "JWT Validation Error");
+            }
         }
         filterChain.doFilter(request, response);
     }
 
-    private String getTokenFromRequest(HttpServletRequest request){
+    private String getTokenFromRequest(HttpServletRequest request) {
 
         String apiToken = request.getHeader("Authorization");
 

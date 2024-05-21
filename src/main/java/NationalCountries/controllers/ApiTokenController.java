@@ -3,8 +3,12 @@ package NationalCountries.controllers;
 import NationalCountries.dto.CreateApiTokenRequest;
 import NationalCountries.dto.ApiTokenResponse;
 import NationalCountries.entity.ApiToken;
+import NationalCountries.exceptions.TokenNotFoundException;
 import NationalCountries.services.ApiTokenService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,14 +28,18 @@ public class ApiTokenController {
     }
 
     @GetMapping
-    public Map<String, Object> getTokens(Authentication authentication, @RequestParam(defaultValue = "1") int pageNumber,
+    public ResponseEntity<?> getTokens(Authentication authentication, @RequestParam(defaultValue = "1") int pageNumber,
                                          @RequestParam(defaultValue = "100") int pageSize) {
-        return apiTokenService.findAllByUser(authentication.getName(), pageNumber, pageSize);
+        return new ResponseEntity<>(apiTokenService.findAllByUser(authentication.getName(), pageNumber, pageSize), HttpStatus.OK);
     }
 
     @DeleteMapping
-    public void deleteToken(Authentication authentication, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> deleteToken(Authentication authentication, @RequestHeader("Authorization") String token) {
         String tokenValue = token.substring(4);
-        apiTokenService.deleteToken(tokenValue, authentication.getName());
+        try {
+            return new ResponseEntity<>(apiTokenService.deleteToken(tokenValue, authentication.getName()), HttpStatus.OK);
+        } catch (TokenNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(e.getStatusCode()));
+        }
     }
 }
