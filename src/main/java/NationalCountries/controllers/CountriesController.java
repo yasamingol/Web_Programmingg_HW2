@@ -1,8 +1,10 @@
 package NationalCountries.controllers;
 
+import NationalCountries.config.RabbitMQConfig;
 import NationalCountries.dto.CountryDetailDTO;
 import NationalCountries.dto.WeatherInfoDTO;
 import NationalCountries.services.CountriesService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,9 @@ public class CountriesController {
 
     @Autowired
     private CountriesService countriesService;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @GetMapping("")
     public Map<String, Object> listAllCountries(@RequestParam(defaultValue = "1") int pageNumber,
@@ -43,11 +48,18 @@ public class CountriesController {
 
     @GetMapping("/{name}/weather")
     public ResponseEntity<WeatherInfoDTO> getWeatherByCountryCapital(@PathVariable String name) {
-        WeatherInfoDTO weather = countriesService.findCountriesCapitalCityWeather(name);
-        if (weather != null) {
-            return ResponseEntity.ok(weather);
-        } else {
-            return ResponseEntity.notFound().build();
+        rabbitTemplate.convertAndSend(RabbitMQConfig.REQUEST_QUEUE, name);
+
+        try {
+            WeatherInfoDTO weather = (WeatherInfoDTO) rabbitTemplate.receiveAndConvert(RabbitMQConfig.RESPONSE_QUEUE, 10000);
+            if (weather != null) {
+                return ResponseEntity.ok(weather);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
         }
     }
 }

@@ -3,7 +3,7 @@ package NationalCountries.services;
 import NationalCountries.dto.CountryDetailDTO;
 import NationalCountries.models.ExternalCountries;
 import NationalCountries.dto.WeatherInfoDTO;
-import NationalCountries.services.UIRepresentations.PaginationService;
+import NationalCountries.services.UIRepresentationsServices.PaginationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

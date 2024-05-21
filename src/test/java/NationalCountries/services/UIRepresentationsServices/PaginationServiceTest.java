@@ -1,4 +1,4 @@
-package NationalCountries.services.UIRepresentations;
+package NationalCountries.services.UIRepresentationsServices;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

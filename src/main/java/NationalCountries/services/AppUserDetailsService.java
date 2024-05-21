@@ -3,7 +3,7 @@ package NationalCountries.services;
 import NationalCountries.dto.UserDto;
 import NationalCountries.entity.User;
 import NationalCountries.repository.UserRepository;
-import NationalCountries.services.UIRepresentations.PaginationService;
+import NationalCountries.services.UIRepresentationsServices.PaginationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

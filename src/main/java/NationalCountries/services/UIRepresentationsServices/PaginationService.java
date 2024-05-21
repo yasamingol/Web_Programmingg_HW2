@@ -1,4 +1,4 @@
-package NationalCountries.services.UIRepresentations;
+package NationalCountries.services.UIRepresentationsServices;
 
 import org.springframework.stereotype.Service;
 
