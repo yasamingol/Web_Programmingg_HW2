@@ -1,9 +1,7 @@
-// AuthServiceTest.java
 package NationalCountries.services;
 
 import NationalCountries.dto.UserDto;
 import NationalCountries.entity.User;
-import NationalCountries.exceptions.LoginException;
 import NationalCountries.exceptions.RegistrationException;
 import NationalCountries.repository.UserRepository;
 import NationalCountries.services.Security.JwtTokenProviderService;

@@ -43,7 +43,7 @@ public class ApiTokenService {
         Map<String, Object> response = new HashMap<>();
         List<ApiToken> allTokens = apiTokenRepository.findAllByUser(user);
         response.put("tokens", paginationService.paginate(allTokens.stream()
-                .map(token -> new ApiTokenResponse(token.getName(), token.getExpirationDate(), "API " + token.getToken()))
+                .map(token -> new ApiTokenResponse(token.getName(), token.getExpirationDate(), "API " + "***"))
                 .collect(Collectors.toList()), pageNumber, pageSize));
         response.put("count", allTokens.size());
         return response;
