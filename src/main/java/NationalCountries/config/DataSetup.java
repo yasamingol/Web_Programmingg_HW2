@@ -19,7 +19,8 @@ public class DataSetup {
         String[] roles = {"ROLE_ADMIN", "ROLE_USER"};
         for (String role : roles) {
             roleRepository.findByName(role).ifPresentOrElse(
-                    existingRole -> {},
+                    existingRole -> {
+                    },
                     () -> {
                         Role newRole = new Role();
                         newRole.setName(role);

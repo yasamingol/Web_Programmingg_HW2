@@ -1,6 +1,5 @@
 package NationalCountries.controllers;
 
-import NationalCountries.dto.UserDto;
 import NationalCountries.services.AdminService;
 import NationalCountries.services.AppUserDetailsService;
 import lombok.AllArgsConstructor;
@@ -30,7 +29,7 @@ public class AdminController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping(value = "/users/")
+    @PutMapping(value = "/users")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> updateUserActivation(@RequestParam String username, @RequestParam boolean active) {
         boolean isUpdated = adminService.updateUserActivation(username, active);

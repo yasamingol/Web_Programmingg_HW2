@@ -58,7 +58,7 @@ public class CountriesController {
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO Hmm?
             return ResponseEntity.status(500).build();
         }
     }

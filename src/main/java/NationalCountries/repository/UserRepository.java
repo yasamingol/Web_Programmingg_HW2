@@ -1,4 +1,5 @@
 package NationalCountries.repository;
+
 import NationalCountries.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

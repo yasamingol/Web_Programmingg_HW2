@@ -1,94 +1,39 @@
 package NationalCountries.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CountryDetailDTO {
 
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("capital")
     private String capital;
+    @JsonProperty("iso2")
     private String iso2;
+    @JsonProperty("population")
     private double population;
+    @JsonProperty("population_growth")
     private double pop_growth;
+    @JsonProperty("currency")
     private Currency currency;
 
-    public CountryDetailDTO() {}
-
-    @JsonProperty("name")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @JsonProperty("capital")
-    public String getCapital() {
-        return capital;
-    }
-
-    public void setCapital(String capital) {
-        this.capital = capital;
-    }
-
-    @JsonProperty("iso")
-    public String getIso2() {
-        return iso2;
-    }
-
-    public void setIso2(String iso2) {
-        this.iso2 = iso2;
-    }
-
-    @JsonProperty("population")
-    public double getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(double population) {
-        this.population = population;
-    }
-
-    @JsonProperty("population_growth")
-    public double getPopGrowth() {
-        return pop_growth;
-    }
-
-    public void setPopGrowth(double pop_growth) {
-        this.pop_growth = pop_growth;
-    }
-
-    @JsonProperty("currency")
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Currency {
+        @JsonProperty("code")
         private String code;
+        @JsonProperty("name")
         private String name;
 
-        public Currency() {}
-
-        @JsonProperty("code")
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        @JsonProperty("name")
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
     }
 }

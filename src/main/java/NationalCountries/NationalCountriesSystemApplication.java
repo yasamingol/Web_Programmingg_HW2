@@ -11,12 +11,12 @@ import org.springframework.web.client.RestTemplate;
 @EnableCaching
 public class NationalCountriesSystemApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(NationalCountriesSystemApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(NationalCountriesSystemApplication.class, args);
+    }
 
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 }
