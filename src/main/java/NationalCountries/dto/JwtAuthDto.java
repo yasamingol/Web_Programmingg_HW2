@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class JwtAuthDto {
     private String jwtToken;
-    private static String tokenType = "Bearer";
+    private static String tokenType = "API";
 }

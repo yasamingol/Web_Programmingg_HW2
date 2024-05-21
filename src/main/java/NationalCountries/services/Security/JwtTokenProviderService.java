@@ -7,10 +7,13 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -23,6 +26,9 @@ public class JwtTokenProviderService {
 
     @Value("${app.jwt-expiration-duration-milliseconds}")
     private long jwtExpirationDuration;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     private Key key(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
@@ -40,8 +46,20 @@ public class JwtTokenProviderService {
         return token;
     }
 
+    public String generateToken(String username, Date expireDate){
+        return Jwts.builder()
+                .subject(username)
+                .issuedAt(new Date())
+                .expiration(expireDate)
+                .signWith(key())
+                .compact();
+    }
+
     public boolean validateToken(String token){
         try{
+            if (isTokenBlacklisted(token)) {
+                throw new MalformedJwtException("Blacklisted JWT Token");
+            }
             Jwts.parser()
                     .verifyWith((SecretKey) key())
                     .build()
@@ -56,6 +74,11 @@ public class JwtTokenProviderService {
         }catch (IllegalArgumentException illegalArgumentException){
             throw new JwtValidationException("Jwt claims string is null or empty", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    private boolean isTokenBlacklisted(String token) {
+        ValueOperations<String, String> ops = redisTemplate.opsForValue();
+        return ops.get(token) != null;
     }
 
     public String getUsername(String token){
