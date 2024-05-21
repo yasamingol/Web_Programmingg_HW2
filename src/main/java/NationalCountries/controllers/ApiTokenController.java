@@ -3,16 +3,12 @@ package NationalCountries.controllers;
 import NationalCountries.dto.CreateApiTokenRequest;
 import NationalCountries.dto.ApiTokenResponse;
 import NationalCountries.entity.ApiToken;
-import NationalCountries.entity.User;
-import NationalCountries.repository.UserRepository;
 import NationalCountries.services.ApiTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user/api-tokens")
@@ -28,11 +24,9 @@ public class ApiTokenController {
     }
 
     @GetMapping
-    public List<ApiTokenResponse> getTokens(Authentication authentication) {
-        List<ApiToken> tokens = apiTokenService.findAllByUser(authentication.getName());
-        return tokens.stream()
-                .map(token -> new ApiTokenResponse(token.getName(), token.getExpirationDate(), "API " + token.getToken()))
-                .collect(Collectors.toList());
+    public Map<String, Object> getTokens(Authentication authentication, @RequestParam(defaultValue = "1") int pageNumber,
+                                         @RequestParam(defaultValue = "100") int pageSize) {
+        return apiTokenService.findAllByUser(authentication.getName(), pageNumber, pageSize);
     }
 
     @DeleteMapping
