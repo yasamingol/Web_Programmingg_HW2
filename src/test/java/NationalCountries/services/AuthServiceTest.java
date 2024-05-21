@@ -1,9 +1,10 @@
+// AuthServiceTest.java
 package NationalCountries.services;
 
 import NationalCountries.dto.UserDto;
 import NationalCountries.entity.User;
+import NationalCountries.exceptions.LoginException;
 import NationalCountries.exceptions.RegistrationException;
-import NationalCountries.repository.RoleRepository;
 import NationalCountries.repository.UserRepository;
 import NationalCountries.services.Security.JwtTokenProviderService;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -72,6 +74,9 @@ class AuthServiceTest {
     @Test
     void login_ValidUser_ReturnsToken() {
         UserDto userDto = new UserDto("validUser", "password");
+        User enabledUser = new User();
+        enabledUser.setEnabled(true);
+        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(enabledUser));
         when(authenticationManager.authenticate(any())).thenReturn(mock(Authentication.class));
         when(jwtTokenProviderService.generateToken(any())).thenReturn("jwtToken");
 
