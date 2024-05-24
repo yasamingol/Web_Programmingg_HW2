@@ -1,14 +1,14 @@
-package NationalCountries.models;
+package NationalCountries.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Country {
+public class CountryDTO {
     @JsonProperty("country")
     private String name;
 
-    public Country() {}
+    public CountryDTO() {}
 
-    public Country(String name) {
+    public CountryDTO(String name) {
         this.name = name;
     }
 

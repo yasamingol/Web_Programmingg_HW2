@@ -1,7 +1,7 @@
 package NationalCountries.services;
 
 import NationalCountries.dto.CountryDetailDTO;
-import NationalCountries.models.ExternalCountries;
+import NationalCountries.dto.ExternalCountriesDTO;
 import NationalCountries.dto.WeatherInfoDTO;
 import NationalCountries.services.UIRepresentationsServices.PaginationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class CountriesService {
 
     @Cacheable(value = "countries")
     public List<List<Object>> findAllCountries(int pageNumber, int pageSize) {
-        ExternalCountries response = externalCountriesService.fetchCountries();
+        ExternalCountriesDTO response = externalCountriesService.fetchCountries();
         if (response != null && response.getCountries() != null) {
             List<Object> countries = new ArrayList<>(response.getCountries());
             return paginationService.paginate(countries, pageNumber, pageSize);
